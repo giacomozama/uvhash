@@ -1,0 +1,58 @@
+@use "../common";
+
+calendar {
+    border: none;
+    background: none;
+
+    header {
+        padding: 12px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        .month,
+        .year {
+            padding: 0 8px;
+        }
+
+        button {
+            border-radius: 8px;
+        }
+    }
+
+    grid {
+        padding: 12px;
+
+        label {
+            transition: background 0.4s ease;
+            border-radius: 8px;
+            margin: 3px;
+            outline: none;
+            padding: 10px 0;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            &:selected {
+                background: common.$accent-1;
+                font-weight: 600;
+            }
+        }
+
+        .day-name {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 0;
+            margin: 3px 0;
+            font-weight: 600;
+
+            &:first-child {
+                border-radius: 8px 0 0 8px;
+                margin-left: 4px;
+            }
+
+            &:nth-child(7) {
+                border-radius: 0 8px 8px 0;
+                margin-right: 4px;
+            }
+        }
+    }
+}

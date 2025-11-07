@@ -1,0 +1,367 @@
+@use "common.scss";
+
+:root {
+    font-family: common.$font;
+    font-weight: 400;
+}
+
+tooltip {
+    background: rgba(0, 0, 0, 0.6);
+    font-size: 16px;
+    font-weight: 400;
+    border: none;
+}
+
+button {
+    background: none;
+    border: none;
+    transition: all 0.2s ease;
+    border-radius: 8px;
+
+    &.circular {
+        border-radius: 99999px;
+    }
+
+    background: rgba(255, 255, 255, 0.1);
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    &:active,
+    &:checked {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    &:hover:active,
+    &:hover:checked {
+        background: rgba(255, 255, 255, 0.25);
+    }
+}
+
+scale {
+    trough {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        min-height: 5px;
+
+        highlight {
+            background: linear-gradient(45deg, common.$accent-1, common.$accent-2);
+        }
+
+        slider {
+            background-image: none;
+            border: none;
+        }
+    }
+}
+
+scrollbar {
+    slider {
+        outline: none;
+    }
+}
+
+switch {
+    border: none;
+    padding: 4px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 9999px;
+
+    &:checked {
+        background: common.$accent-2;
+    }
+
+    slider {
+        background-image: none;
+        border: none;
+    }
+}
+
+.glassy-background {
+    @include common.glassy-background;
+}
+
+.glassy-background-dark {
+    @include common.glassy-background-dark;
+}
+
+.glassy-chip {
+    @include common.glassy-chip;
+}
+
+.glassy-chip-button {
+    @include common.glassy-chip-button;
+}
+
+.fading {
+    transition: all 0.15s linear;
+
+    &:not(.visible) {
+        opacity: 0;
+    }
+
+    &.visible {
+        opacity: 1;
+    }
+}
+
+.popover-standard-dark {
+    margin: 7px 3px 0 3px;
+    border-radius: 18px;
+    padding: 8px;
+
+    contents {
+        border: none;
+        border-radius: 18px;
+        margin: -11px;
+        padding: 0;
+
+        @include common.glassy-background-dark;
+
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.25);
+
+        .popover-standard-inner {
+            border-radius: 18px;
+        }
+    }
+
+    dropdown contents {
+        background: transparent;
+        border-radius: 8px;
+    }
+}
+
+.popover-title {
+    font-size: 22px;
+    font-weight: 600;
+    padding: 3px 24px 0 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+    > image {
+        margin: 0 12px 0 0;
+        -gtk-icon-size: 24px;
+    }
+
+    > label {
+        margin: 24px 0;
+    }
+
+    > button {
+        &:not(.corner) {
+            @include common.glassy-chip-button;
+            font-size: 16px;
+            font-weight: 500;
+            padding: 6px 12px;
+            min-height: 24px;
+        }
+    }
+}
+
+.popover-control-list {
+    padding-bottom: 24px;
+
+    .popover-control-list-item {
+        border-radius: 0;
+        padding: 16px 24px;
+        font-weight: 400;
+        font-size: 16px;
+        min-height: 32px;
+        background: transparent;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        .popover-control-list-item-icon {
+            margin-right: 18px;
+            -gtk-icon-size: 24px;
+            margin-right: 24px;
+        }
+
+        .title {
+            padding-bottom: 4px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .description {
+            opacity: 0.6;
+        }
+
+        .checkmark {
+            padding-left: 12px;
+        }
+
+        &.header {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        scale {
+            padding: 0 12px 0 0;
+        }
+
+        &:first-child {
+            border-top: none;
+        }
+
+        &:last-child {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    button.popover-control-list-item {
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        &:active {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        &:hover + .popover-control-list-item {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    }
+}
+
+.glassy-menu {
+    margin: -4px 0 4px 0;
+    font-weight: 400;
+    font-size: 16px;
+    border-radius: 18px;
+
+    stack {
+        @include common.glassy-background-dark;
+
+        box-shadow: inset 0 0 1px 3.5px rgba(255, 255, 255, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+        border-radius: 18px;
+
+        > * {
+            padding: 12px;
+        }
+    }
+
+    contents {
+        font-family: common.$font;
+        background: none;
+        border: none;
+        border-radius: 18px;
+        margin: 8px;
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    separator {
+        margin: 8px -11px;
+        min-width: 22px;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    popover {
+        margin: 0 8px;
+        padding: 8px;
+    }
+
+    modelbutton {
+        padding: 4px 12px;
+        border-radius: 8px;
+        min-height: 32px;
+        min-width: 160px;
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    contents contents {
+        margin: 0 6px;
+        box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
+        border-radius: 18px;
+    }
+}
+
+.gloss {
+    border-radius: 12px;
+    box-shadow: inset 0 0 3px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.popover-message {
+    font-size: 18px;
+
+    label {
+        opacity: 0.4;
+    }
+}
+
+.subtext {
+    font-size: 14px;
+    opacity: 0.6;
+}
+
+dropdown {
+    border-radius: 8px;
+    padding: 0;
+    min-height: 0;
+    margin: 0;
+
+    > button {
+        @include common.glassy-chip-button;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 6px 12px;
+        min-height: 22px;
+    }
+
+    row {
+        transition: all 0.2s ease;
+        font-size: 14px;
+    }
+
+    popover {
+        border-radius: 10px;
+        padding: 8px;
+        margin: 10px 0 0 0;
+
+        listview {
+            background: none;
+            padding: 0;
+            margin: 7px 0;
+        }
+
+        row {
+            padding: 0;
+            min-height: 0;
+            border-radius: 8px;
+
+            background: transparent;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            &:active,
+            &:checked {
+                background: rgba(255, 255, 255, 0.15);
+            }
+
+            &:hover:active,
+            &:hover:checked {
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            > box {
+                padding: 8px 12px;
+            }
+        }
+    }
+}
+
+.popover-standard-dark {
+    dropdown contents {
+        background: rgba(255, 255, 255, 0.155);
+        box-shadow: inset 0 0 1px 3px rgba(255, 255, 255, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.155),
+            0 0 4px 0 rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+    }
+}

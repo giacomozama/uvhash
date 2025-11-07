@@ -1,0 +1,121 @@
+@use "../common";
+
+@keyframes bar-fade-in {
+    0% {
+        opacity: 0.0000001;
+    }
+
+    66% {
+        opacity: 0.0000001;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+window.BarBackground {
+    color: common.$fg-color;
+    font-family: common.$font;
+    // animation: bar-fade-in 1.5s linear;
+
+    > main {
+        padding: 8px 8px 0 8px;
+
+        main-inner {
+            @include common.glassy-background;
+            box-shadow: none;
+            border-radius: 12px;
+            // padding: 6px;
+        }
+    }
+}
+
+window.BarForeground {
+    // animation: bar-fade-in 1.5s linear;
+
+    > main {
+        padding: 8px 8px 0 8px;
+
+        main-inner {
+            box-shadow: none;
+            border-radius: 12px;
+            // padding: 6px;
+
+            .bar-gloss {
+                @include common.glassy-background;
+                background-color: transparent;
+                border-radius: 12px;
+            }
+
+            .bar-button,
+            .bar-chip {
+                -gtk-icon-size: 16px;
+                // border-radius: 8px;
+                border-radius: 0;
+                border: none;
+                min-height: 32px;
+
+                &button,
+                > button,
+                > menubutton > button,
+                &.system-tray > .tray-icon > menubutton > button {
+                    -gtk-icon-size: 16px;
+                    background: none;
+                    min-width: 20px;
+                    padding: 6px 12px;
+                    font-size: 16px;
+                    font-weight: 400;
+                    border-radius: 0;
+
+                    &:hover,
+                    &:active {
+                        background: rgba(255, 255, 255, 0.2);
+                    }
+                }
+            }
+
+            .bar-chip {
+                // @include glassy-chip;
+            }
+
+            .bar-button {
+                // @include glassy-chip-button;
+                border-radius: 0;
+            }
+
+            menubutton.bar-button {
+                padding: 0;
+
+                > button {
+                    border: none;
+                    box-shadow: none;
+                    background: none;
+                    font-size: 16px;
+                    font-weight: 400;
+                }
+            }
+
+            .bar-group {
+                // @include glassy-chip;
+                background: transparent;
+                border-radius: 0;
+
+                .bar-button,
+                .bar-chip {
+                    border: none;
+                    box-shadow: none;
+                    border-radius: 0;
+                    min-width: 32px;
+
+                    &button,
+                    > button,
+                    > menubutton > button,
+                    &.system-tray > .tray-icon > menubutton > button {
+                        border-radius: 0;
+                    }
+                }
+            }
+        }
+    }
+}

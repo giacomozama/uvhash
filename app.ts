@@ -1,6 +1,5 @@
-#!/usr/bin/env -S ags run
+#!/usr/bin/env -S ags run --gtk 4
 
-import app from "ags/gtk4/app";
 import { initApp } from "./src/init";
 
-initApp(app);
+initApp();

@@ -1,0 +1,29 @@
+.trash-idle {
+    .squircle {
+        opacity: 0;
+    }
+
+    .squircle-danger {
+        opacity: 0;
+    }
+}
+
+.trash-hover {
+    .squircle {
+        opacity: 0.5;
+    }
+
+    .squircle-danger {
+        opacity: 0;
+    }
+}
+
+.trash-killing {
+    button {
+        opacity: 0;
+    }
+
+    .squircle-danger {
+        opacity: 0.7;
+    }
+}

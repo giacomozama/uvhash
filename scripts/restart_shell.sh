@@ -10,4 +10,4 @@ killall walker
 hyprctl dispatch exec "$RICE_HOME/walker --gapplication-service"
 
 killall gjs
-hyprctl dispatch exec "ags run $RICE_HOME/shell/app.ts"
+hyprctl dispatch exec "ags run --gtk 4 $RICE_HOME/shell/app.ts"

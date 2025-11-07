@@ -1,0 +1,75 @@
+@use "../common";
+
+.events {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+
+    .news-item {
+        padding: 24px;
+
+        &:not(:last-child) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    }
+
+    .picture {
+        background-size: 100%;
+        border-radius: 12px;
+        margin: 8px 0;
+        box-shadow: inset 0 0 4px 1px rgba(255, 255, 255, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    .title {
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+
+    .gloss {
+        border-radius: 12px;
+        box-shadow: inset 0 0 1px 3px rgba(255, 255, 255, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.11);
+        border: none;
+    }
+
+    .keyboard {
+        button {
+            padding: 12px 8px;
+            margin: 2px;
+            border-radius: 6px;
+            box-shadow: inset 0 0 1px 3px rgba(255, 255, 255, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.11);
+        }
+    }
+
+    .attempts {
+        font-family: Adwaita Mono;
+        font-size: 30px;
+        padding: 24px;
+
+        > box {
+            > box {
+                background-color: rgba(255, 255, 255, 0.1);
+                box-shadow: inset 0 0 3px 1px rgba(255, 255, 255, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+                padding: 6px 12px;
+                border-radius: 8px;
+                margin: 2px;
+                transition: all 0.2s ease;
+            }
+        }
+
+        .correct {
+            background-color: rgb(60, 128, 0);
+        }
+
+        .present {
+            background-color: rgb(200, 100, 1);
+        }
+    }
+
+    .buffer > label {
+        background-color: rgba(255, 255, 255, 0.1);
+        box-shadow: inset 0 0 3px 1px rgba(255, 255, 255, 0.05), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        padding: 6px 12px;
+        border-radius: 8px;
+        margin: 2px;
+        transition: all 0.2s ease;
+    }
+}

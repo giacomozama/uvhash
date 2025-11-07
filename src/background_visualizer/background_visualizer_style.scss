@@ -1,0 +1,27 @@
+@use "../common";
+
+window.BackgroundVisualizer {
+    .background-clock {
+        margin: -24px 0 0 0;
+        font-family: Staatliches;
+        font-weight: 400;
+
+        .time {
+            margin-right: 48px;
+            font-size: 350px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .date {
+            font-size: 250px;
+            margin: -140px 48px 0 0;
+            color: common.$accent-2;
+            opacity: 0.3;
+        }
+    }
+
+    polyhedron {
+        min-height: 200px;
+        min-width: 75px;
+    }
+}

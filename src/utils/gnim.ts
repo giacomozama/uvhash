@@ -1,7 +1,7 @@
 import { createPoll } from "ags/time";
 import { createState, State } from "gnim";
-import { Storage } from "../state/storage/types";
-import { setStorage, storage } from "../state/storage/storage_state";
+import { Storage } from "../storage/types";
+import { setStorage, storage } from "../storage/storage_state";
 
 export function createPollState(init: string, interval: number, exec: string | string[]): State<string>;
 

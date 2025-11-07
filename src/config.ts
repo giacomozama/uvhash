@@ -1,10 +1,10 @@
 import { exec } from "ags/process";
-import { parseRGBA } from "./utils/colors";
+import { parseRGB } from "./utils/colors";
 import GLib from "gi://GLib?version=2.0";
 import AstalCava from "gi://AstalCava?version=0.1";
-import { MusicVisualierMode } from "./state/media/types";
-import { DockItemFeature, DockItemQuery } from "./state/dock/types";
-import { loadMeteoAMWeatherData } from "./state/weather/weather_meteoam";
+import { MusicVisualierMode } from "./media/types";
+import { DockItemFeature, DockItemQuery } from "./dock/types";
+import { loadMeteoAMWeatherData } from "./weather/weather_meteoam";
 
 const SHELL_NAME = "uvhash";
 const SHELL_VERSION = "0.1";
@@ -13,8 +13,8 @@ const CACHE_DIR = `${HOME}/.cache/${SHELL_NAME}`;
 const RICE_HOME = GLib.getenv("RICE_HOME");
 const username = GLib.getenv("USER")!;
 const hostname = exec("cat /etc/hostname")!;
-const ACCENT_1 = parseRGBA(GLib.getenv("SHELL_ACCENT_1") ?? "0781e3ff");
-const ACCENT_2 = parseRGBA(GLib.getenv("SHELL_ACCENT_2") ?? "ff0077ff");
+const ACCENT_1 = parseRGB(GLib.getenv("SHELL_ACCENT_1") ?? "0781e3");
+const ACCENT_2 = parseRGB(GLib.getenv("SHELL_ACCENT_2") ?? "ff0077");
 
 export const config = {
     shellName: SHELL_NAME,
@@ -43,26 +43,6 @@ export const config = {
         accent1: ACCENT_1,
         accent2: ACCENT_2,
     },
-    dash: {
-        username,
-        hostname,
-        avatarPath: `/var/lib/AccountsService/icons/${username}`,
-        shortcuts: [
-            {
-                iconName: "utilities-system-monitor-symbolic",
-                label: "System monitor",
-                command: "gnome-system-monitor",
-            },
-            {
-                iconName: "raspberry-logo",
-                label: "Deepnest",
-                command: `nautilus sftp://rasp@192.168.1.70/home/rasp`,
-            },
-            { iconName: "drive-harddisk-symbolic", label: "QVO", command: `xdg-open /mnt/qvo` },
-            { iconName: "code-symbolic", label: "Projects", command: `xdg-open ${HOME}/Projects` },
-            { iconName: "folder-download-symbolic", label: "Downloads", command: `xdg-open ${HOME}/Downloads` },
-        ],
-    },
     dock: {
         items: [
             { query: "firefox" },
@@ -77,9 +57,12 @@ export const config = {
             { query: "qbittorrent" },
             // { query: "bottles", feature: DockItemFeature.BottlesLauncher },
             // { query: "steam", feature: DockItemFeature.SteamLauncher },
-            { query: "discord" },
+            { query: "/usr/bin/discord" },
         ] as DockItemQuery[],
-        launcherCommand: `${RICE_HOME}/walker`,
+        itemSize: 52,
+        iconSize: 36,
+        searchIconSize: 28,
+        launcherCommand: `walker`,
         trash: {
             checkIsFullCommand: `/bin/bash -c "[ \`find ${HOME}/.local/share/Trash/files -prune -empty 2>/dev/null\` ] && echo 0 || echo 1"`,
             checkIsFullInterval: 2000,
@@ -116,6 +99,16 @@ export const config = {
     network: {
         networkSettingsCommand: "nm-connection-editor",
     },
+    news: {
+        feeds: [
+            { name: "NY Times", url: "https://rss.nytimes.com/services/xml/rss/nyt/World.xml" },
+            {
+                name: "Reuters",
+                url: "https://rss-bridge.org/bridge01/?action=display&bridge=ReutersBridge&feed=home%2Ftopnews&format=Mrss",
+            },
+        ],
+        picsCacheDir: `${CACHE_DIR}/news/pics`,
+    },
     path: {
         cacheDir: CACHE_DIR,
         storageDir: `${HOME}/.config/${SHELL_NAME}`,
@@ -123,11 +116,9 @@ export const config = {
         bottlesCli: "bottles-cli",
         magick: "magick",
         mpc: "mpc",
+        python: `${SRC}/.venv/bin/python`,
         xdgOpen: "xdg-open",
         yaml2json: "yaml2json",
-    },
-    polyhedronToy: {
-        dotColor: ACCENT_1,
     },
     updates: {
         checkUpdatesCommand: `/bin/bash -c "(checkupdates; yay -Qum 2>/dev/null); exit 0"`,

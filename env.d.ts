@@ -10,12 +10,12 @@ declare module "*.scss" {
   export default content
 }
 
-declare module "*.xml" {
+declare module "*.txt" {
   const content: string
   export default content
 }
 
-declare module "*.glsl" {
+declare module "*.xml" {
   const content: string
   export default content
 }

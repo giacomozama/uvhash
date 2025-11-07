@@ -21,6 +21,13 @@ export function walkChildren(widget: Gtk.Widget, callback: (widget: Gtk.Widget) 
     }
 }
 
+export function clearChildren(widget: Gtk.Box) {
+    let child;
+    while (child = widget.get_first_child()) {
+        widget.remove(child)
+    }
+}
+
 export function findParent(widget: Gtk.Widget, predicate: (widget: Gtk.Widget) => boolean): Gtk.Widget | null {
     if (predicate(widget)) return widget;
     const parent = widget.get_parent();

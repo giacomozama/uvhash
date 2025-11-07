@@ -1,0 +1,114 @@
+@use "../common.scss";
+
+media-controls {
+    .instance {
+        padding-left: 12px;
+        opacity: 0.7;
+    }
+
+    .bars {
+        // border-radius: 8px;
+    }
+
+    .cover-art-background {
+        border-radius: 18px;
+
+        > * {
+            min-width: 64px;
+            min-height: 64px;
+            filter: blur(8px);
+            margin: -32px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 18px;
+            opacity: 0.8;
+            transition: background-image 0.3s ease;
+        }
+    }
+
+    .popover-standard-dark {
+        box-shadow: none;
+    }
+
+    .cover-art {
+        background-color: rgba(0, 0, 0, 0.7);
+        border-radius: 12px;
+        background-size: cover;
+        background-position: center;
+        min-width: 128px;
+        min-height: 128px;
+    }
+
+    .cover-art-background-gloss {
+        border-radius: 18px;
+        box-shadow: inset 0 0 1px 4px rgba(255, 255, 255, 0.1);
+    }
+
+    .media-controls-inner {
+        border-radius: 18px;
+        padding: 18px;
+
+        .song-info-box {
+            background-color: rgba(10, 10, 10, 0.6);
+            padding: 12px;
+            border-radius: 0 12px 12px 0;
+
+            .artist-label,
+            .album-label {
+                font-size: 16px;
+                opacity: 0.8;
+                font-weight: 500;
+            }
+
+            .title-label {
+                font-size: 20px;
+                font-weight: 600;
+            }
+        }
+
+        scale {
+            padding: 24px 12px;
+            highlight {
+                background: var(--slider-color);
+            }
+        }
+
+        .slider-labels {
+            margin: 0 -18px 0 -18px;
+
+            label {
+                background: rgba(10, 10, 10, 0.6);
+                padding: 8px 24px;
+                min-width: 90px;
+
+                &:first-child {
+                    border-radius: 0 999px 999px 0;
+                    padding-right: 0;
+                }
+
+                &:last-child {
+                    border-radius: 999px 0 0 999px;
+                    padding-left: 0;
+                }
+            }
+        }
+    }
+
+    .buttons-box {
+        button {
+            background-color: rgba(10, 10, 10, 0.6);
+
+            &:hover {
+                background-color: rgba(40, 40, 40, 0.6);
+            }
+
+            &:active {
+                background-color: rgba(60, 60, 60, 0.6);
+            }
+        }
+
+        button.play-pause {
+            -gtk-icon-size: 28px;
+        }
+    }
+}

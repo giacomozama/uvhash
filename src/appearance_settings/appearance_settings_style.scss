@@ -1,0 +1,40 @@
+@use "common.scss";
+
+window.Appearance {
+    background: common.$bg-color;
+    font-size: 18px;
+
+    main-inner {
+        border-radius: 24px;
+        padding: 24px;
+
+        .picture-box {
+            border-radius: 12px;
+
+            .wallpaper {
+                border-radius: 12px;
+                background-color: rgba(0, 0, 0, 0.4);
+            }
+
+            .gloss {
+                border-radius: 12px;
+            }
+        }
+
+        .colors-row {
+            padding-top: 24px;
+        }
+
+        .buttons-row {
+            padding-top: 24px;
+
+            button {
+                border-radius: 8px;
+            }
+
+            .accent-preview {
+                border-radius: 9999px;
+            }
+        }
+    }
+}

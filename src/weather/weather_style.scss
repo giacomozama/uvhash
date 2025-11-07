@@ -1,0 +1,63 @@
+.hourly-weather-item {
+    padding: 24px 0;
+    font-size: 20px;
+
+    .date {
+        font-size: 14px;
+        opacity: 0.6;
+    }
+
+    .time {
+        font-size: 18px;
+    }
+
+    .weather-type-icon {
+        -gtk-icon-size: 48px;
+    }
+
+    &:not(:last-child) {
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .rain-probability {
+        font-size: 16px;
+        opacity: 0.6;
+    }
+}
+
+.weather {
+    > menubutton {
+        min-width: 90px;
+    }
+}
+
+.weather-visualizer {
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+
+    .current-weather {
+        font-size: 120px;
+        font-weight: 600;
+        font-family: Bebas Neue;
+
+        .temp {
+            margin-top: 18px;
+        }
+    }
+
+    .hourly-list {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+        .hourly-weather-item {
+            .hourly-weather-item {
+                padding: 24px 0;
+                font-size: 20px;
+
+                .weather-type-icon {
+                    -gtk-icon-size: 32px;
+                    margin: 0 0 24px 0;
+                }
+            }
+        }
+    }
+}

@@ -1,13 +1,13 @@
 import style from "./style.scss";
-import Dock from "./widget/dock/Dock";
+import { DockBackground, DockForeground } from "./dock/Dock";
 import { rgbToComponents } from "./utils/colors";
 import config from "./config";
 import { rememberForEachMonitor } from "./utils/monitors";
 import app from "ags/gtk4/app";
-import { VolumeChangeWindow } from "./widget/roots/VolumeChangeWindow";
-import { setupBackgroundVisualizer } from "./state/background_visualizer/background_visualizer_state";
-import { NewNotificationWindow } from "./widget/roots/NewNotificationWindow";
-import Bar from "./widget/roots/Bar";
+import { VolumeChangeWindow } from "./audio/VolumeChangeWindow";
+import { setupBackgroundVisualizer } from "./background_visualizer/background_visualizer_state";
+import { NewNotificationWindow } from "./notifications/NewNotificationWindow";
+import { BarBackground, BarForeground } from "./bar/Bar";
 
 function getAppCSS() {
     const cssVariablesChunk = `
@@ -19,18 +19,20 @@ function getAppCSS() {
     return `${cssVariablesChunk}\n${style}`;
 }
 
-export function initApp(application: typeof app) {
-    application.start({
+export function initApp() {
+    app.start({
         instanceName: config.shellName,
         css: getAppCSS(),
         icons: `${SRC}/icons`,
         iconTheme: "Papirus-Dark",
         main() {
             setupBackgroundVisualizer();
-            Bar();
+            BarBackground();
+            BarForeground();
             VolumeChangeWindow();
             NewNotificationWindow();
-            rememberForEachMonitor(Dock);
+            rememberForEachMonitor(DockBackground);
+            rememberForEachMonitor(DockForeground);
         },
     });
 }

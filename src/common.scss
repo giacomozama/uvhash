@@ -1,0 +1,61 @@
+$fg-color: white;
+$bg-color: #{"@theme_bg_color"};
+$accent-1-rgb: #{"var(--shell-accent-1-rgb)"};
+$accent-2-rgb: #{"var(--shell-accent-2-rgb)"};
+$accent-1: #{"rgb(var(--shell-accent-1-rgb))"};
+$accent-2: #{"rgb(var(--shell-accent-2-rgb))"};
+$font: Adwaita Sans;
+
+@mixin cross-helper {
+    background: linear-gradient(
+            to right,
+            transparent calc(50% - 1px),
+            red calc(50% - 1px),
+            red calc(50% + 2px),
+            transparent calc(50% + 2px)
+        ),
+        linear-gradient(
+            to bottom,
+            green calc(50% - 1px),
+            red calc(50% - 1px),
+            red calc(50% + 2px),
+            green calc(50% + 2px)
+        );
+}
+
+@mixin glassy-background {
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 1px 3px rgba(255, 255, 255, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.11);
+}
+
+@mixin glassy-background-dark {
+    background: rgba(20, 20, 20, 0.8);
+    box-shadow: none;
+}
+
+@mixin glassy-chip {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+@mixin glassy-chip-button {
+    @include glassy-chip;
+    background-image: none;
+    transition: all 0.2s ease;
+    font-weight: 400;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    &:active,
+    &:checked {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    &:hover:active,
+    &:hover:checked {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}

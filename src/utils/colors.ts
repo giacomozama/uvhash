@@ -16,6 +16,10 @@ export function parseRGBA(raw: string): Gdk.RGBA {
     return new Gdk.RGBA({ red, green, blue, alpha });
 }
 
+export function parseRGB(raw: string): Gdk.RGBA {
+    return parseRGBA(`${raw}FF`);
+}
+
 export function rgbaToHex({ red, green, blue, alpha }: Gdk.RGBA) {
     const hr = Math.floor(red * 255)
         .toString(16)
@@ -32,11 +36,28 @@ export function rgbaToHex({ red, green, blue, alpha }: Gdk.RGBA) {
     return `#${hr}${hg}${hb}${ha}`;
 }
 
+export function rgbToHex({ red, green, blue }: Gdk.RGBA) {
+    const hr = Math.floor(red * 255)
+        .toString(16)
+        .padStart(2, "0");
+    const hg = Math.floor(green * 255)
+        .toString(16)
+        .padStart(2, "0");
+    const hb = Math.floor(blue * 255)
+        .toString(16)
+        .padStart(2, "0");
+    return `#${hr}${hg}${hb}ff`;
+}
+
 export function rgbToComponents({ red, green, blue }: Gdk.RGBA) {
     const hr = Math.floor(red * 255);
     const hg = Math.floor(green * 255);
     const hb = Math.floor(blue * 255);
     return `${hr}, ${hg}, ${hb}`;
+}
+
+export function rgbaWithAlpha({ red, green, blue }: Gdk.RGBA, alpha: number) {
+    return new Gdk.RGBA({ red, green, blue, alpha });
 }
 
 export async function generatePalette(imagePath: string, colors: number, theme?: string) {
