@@ -9,6 +9,7 @@ $background-panel-border-radius: #{var(--background-panel-border-radius)};
 $panel-padding: #{var(--panel-padding)};
 $panel-margin: #{var(--panel-margin)};
 $font: Adwaita Sans;
+$popover-radius: 12px;
 
 @mixin cross-helper {
     background: linear-gradient(

@@ -7,7 +7,7 @@ window.media-controls {
     }
 
     .cover-art-background {
-        border-radius: 18px;
+        border-radius: common.$popover-radius;
 
         > * {
             min-width: 64px;
@@ -16,7 +16,7 @@ window.media-controls {
             margin: -32px;
             background-size: cover;
             background-position: center;
-            border-radius: 18px;
+            border-radius: common.$popover-radius;
             opacity: 0.8;
             transition: background-image 0.3s ease;
         }
@@ -36,12 +36,12 @@ window.media-controls {
     }
 
     .cover-art-background-gloss {
-        border-radius: 18px;
+        border-radius: common.$popover-radius;
         box-shadow: inset 0 0 1px 4px rgba(255, 255, 255, 0.1);
     }
 
     .media-controls-inner {
-        border-radius: 18px;
+        border-radius: common.$popover-radius;
         padding: 18px;
 
         .song-info-box {
@@ -63,6 +63,7 @@ window.media-controls {
         }
 
         scale {
+            margin-top: 12px;
             padding: 24px 12px;
             highlight {
                 background: var(--slider-color);
@@ -70,7 +71,7 @@ window.media-controls {
         }
 
         .slider-labels {
-            margin: 0 -18px 0 -18px;
+            margin: 0 -18px 12px -18px;
 
             label {
                 background: rgba(10, 10, 10, 0.6);

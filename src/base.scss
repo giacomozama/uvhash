@@ -57,15 +57,15 @@ switch {
 }
 
 window.popover-standard {
-    margin: 20px 11px 16px 11px;
-    border-radius: 18px;
+    margin: 18px 11px 14px 11px;
+    border-radius: common.$popover-radius;
 
     @include common.glassy-background-dark;
 
     box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.3);
 
     .popover-standard-inner {
-        border-radius: 18px;
+        border-radius: common.$popover-radius;
     }
 }
 
@@ -164,13 +164,13 @@ window.popover-standard {
     margin: -4px 0 4px 0;
     font-weight: 400;
     font-size: 16px;
-    border-radius: 18px;
+    border-radius: common.$popover-radius;
 
     stack {
         @include common.glassy-background-dark;
 
         box-shadow: inset 0 0 1px 3.5px rgba(255, 255, 255, 0.07), inset 0 0 0 1px rgba(255, 255, 255, 0.15);
-        border-radius: 18px;
+        border-radius: common.$popover-radius;
 
         > * {
             padding: 12px;
@@ -181,7 +181,7 @@ window.popover-standard {
         font-family: common.$font;
         background: none;
         border: none;
-        border-radius: 18px;
+        border-radius: common.$popover-radius;
         margin: 8px;
         box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
     }
@@ -212,7 +212,7 @@ window.popover-standard {
     contents contents {
         margin: 0 6px;
         box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.3);
-        border-radius: 18px;
+        border-radius: common.$popover-radius;
     }
 }
 

@@ -1,8 +1,6 @@
 import { Gtk } from "ags/gtk4";
 import { createPoll } from "ags/time";
-import Graphene from "gi://Graphene?version=1.0";
 import { Accessor } from "gnim";
-import GObject from "gnim/gobject";
 
 const TIME_OPTIONS: Intl.DateTimeFormatOptions = {
     hour: "2-digit",

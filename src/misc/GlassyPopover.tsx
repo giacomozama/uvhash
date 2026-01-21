@@ -309,7 +309,7 @@ export const ContrapshellPopoverMenu = GObject.registerClass(
     }
 );
 
-const DEFAULT_CORNER_SIZE = new Graphene.Size({ width: 18, height: 18 });
+const DEFAULT_CORNER_SIZE = new Graphene.Size({ width: 12, height: 12 });
 const DEFAULT_GLOSS_COLOR_INNER = new Gdk.RGBA({ red: 1, green: 1, blue: 1, alpha: 0.1 });
 const DEFAULT_GLOSS_COLOR_OUTER = new Gdk.RGBA({ red: 1, green: 1, blue: 1, alpha: 0.15 });
 
@@ -422,7 +422,7 @@ export const ContrapshellPopoverWindow = GObject.registerClass(
                 DEFAULT_CORNER_SIZE,
                 DEFAULT_CORNER_SIZE
             );
-            snapshot.append_inset_shadow(roundedRect, DEFAULT_GLOSS_COLOR_INNER, 0, 0, 3.5, 1);
+            snapshot.append_inset_shadow(roundedRect, DEFAULT_GLOSS_COLOR_INNER, 0, 0, 3, 1);
             snapshot.append_inset_shadow(roundedRect, DEFAULT_GLOSS_COLOR_OUTER, 0, 0, 1, 0);
         }
     }

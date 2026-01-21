@@ -84,7 +84,7 @@ function drawGraphLine(
     const { red, green, blue } = config.colors.accent2;
     cr.setSourceRGBA(red, green, blue, 1);
     cr.strokePreserve();
-    cr.setSourceRGBA(red, green, blue, 0.2);
+    cr.setSourceRGBA(red, green, blue, 0.3);
     cr.fill();
 }
 

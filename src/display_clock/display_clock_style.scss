@@ -5,7 +5,7 @@
     border-radius: common.$background-panel-border-radius;
 
     .display-clock-calendar {
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 255, 255, 0.7);
         font-family: "Ode to Idle Gaming";
         margin-top: -20px;
 
@@ -13,16 +13,16 @@
             font-size: 154px;
 
             .clock-time-hours {
-                color: common.$accent-2;
+                color: rgba(common.$accent-2-rgb, 0.7);
             }
         }
 
         .clock-date {
             font-size: 60px;
-            margin-top: -56px; // Pull it up slightly closer to the time if needed, or adjust
+            margin-top: -56px;
 
             .clock-date-month {
-                color: common.$accent-2; // Placeholder color, adjust as needed
+                color: rgba(common.$accent-2-rgb, 0.7);
             }
         }
     }

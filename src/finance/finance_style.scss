@@ -72,53 +72,12 @@
             background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)),
                 linear-gradient(
                     0deg,
-                    transparent 9%,
-                    rgba(255, 255, 255, 0.2) 10%,
-                    rgba(255, 255, 255, 0.2) 12%,
-                    transparent 13%,
-                    transparent 29%,
-                    rgba(255, 255, 255, 0.1) 30%,
-                    rgba(255, 255, 255, 0.1) 31%,
-                    transparent 32%,
-                    transparent 49%,
-                    rgba(255, 255, 255, 0.1) 50%,
-                    rgba(255, 255, 255, 0.1) 51%,
-                    transparent 52%,
-                    transparent 69%,
-                    rgba(255, 255, 255, 0.1) 70%,
-                    rgba(255, 255, 255, 0.1) 71%,
-                    transparent 72%,
-                    transparent 89%,
-                    rgba(255, 255, 255, 0.1) 90%,
-                    rgba(255, 255, 255, 0.1) 91%,
-                    transparent 92%,
-                    transparent
-                ),
-                linear-gradient(
-                    90deg,
-                    transparent 9%,
-                    rgba(255, 255, 255, 0.2) 10%,
-                    rgba(255, 255, 255, 0.2) 12%,
-                    transparent 13%,
-                    transparent 29%,
-                    rgba(255, 255, 255, 0.1) 30%,
-                    rgba(255, 255, 255, 0.1) 31%,
-                    transparent 32%,
-                    transparent 49%,
-                    rgba(255, 255, 255, 0.1) 50%,
-                    rgba(255, 255, 255, 0.1) 51%,
-                    transparent 52%,
-                    transparent 69%,
-                    rgba(255, 255, 255, 0.1) 70%,
-                    rgba(255, 255, 255, 0.1) 71%,
-                    transparent 72%,
-                    transparent 89%,
-                    rgba(255, 255, 255, 0.1) 90%,
-                    rgba(255, 255, 255, 0.1) 91%,
-                    transparent 92%,
-                    transparent
+                    rgba(255, 255, 255, 0.1) 0px,
+                    rgba(255, 255, 255, 0.1) 1px,
+                    transparent 1px
                 );
-            background-size: 50px 50px;
+            background-size: 100% calc((100% - 64px) / 5);
+            background-position: 0 32px;
         }
     }
 }
