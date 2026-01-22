@@ -16,7 +16,7 @@ function createNetworkState(): NetworkState {
     const client = network.client;
 
     const vpns = createBinding(client, "connections").as((connections) => {
-        return connections.filter((c) => c.get_setting_vpn() !== null);
+        return connections.filter((c) => c.get_setting_vpn() !== null || c.get_connection_type() === "wireguard");
     });
 
     networkStateInstance = {

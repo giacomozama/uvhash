@@ -1,6 +1,6 @@
 import { Gtk } from "ags/gtk4";
 import { CURSOR_POINTER, popdownParentWindow } from "../utils/gtk";
-import { createBinding, For, createState, createEffect } from "gnim";
+import { createBinding, For, createState, createEffect, createComputed } from "gnim";
 import Pango from "gi://Pango?version=1.0";
 import { execAsync } from "ags/process";
 import config from "../config";
@@ -29,13 +29,19 @@ function NetworkToggle() {
 
 function NetworkConnectionItem({ connection }: { connection: NM.Connection }) {
     const client = networkState().client;
-    
-    const activeConnection = createBinding(client, "active_connections").as((actives) =>
-        actives.find((ac) => ac.get_uuid() === connection.get_uuid())
-    );
 
-    const isConnected = activeConnection.as((ac) => !!ac && ac.state === NM.ActiveConnectionState.ACTIVATED);
-    const isConnecting = activeConnection.as((ac) => !!ac && ac.state === NM.ActiveConnectionState.ACTIVATING);
+    const connectionState = createComputed(() => {
+        const activeConns = createBinding(client, "active_connections")();
+        for (const conn of activeConns) {
+            if (conn.get_uuid() === connection.get_uuid()) {
+                return createBinding(conn, "state")();
+            }
+        }
+        return undefined;
+    });
+
+    const isConnected = connectionState.as((s) => s === NM.ActiveConnectionState.ACTIVATED);
+    const isConnecting = connectionState.as((s) => s === NM.ActiveConnectionState.ACTIVATING);
 
     return (
         <box class="popover-control-list-item" orientation={Gtk.Orientation.HORIZONTAL} valign={Gtk.Align.CENTER}>
@@ -64,10 +70,14 @@ function NetworkConnectionItem({ connection }: { connection: NM.Connection }) {
                             .get_active_connections()
                             .find((ac) => ac.get_uuid() === connection.get_uuid());
 
-                        if (activeConn) {
-                            client.deactivate_connection(activeConn, null);
+                        if (activeConn?.state === NM.ActiveConnectionState.ACTIVATED) {
+                            client.deactivate_connection_async(activeConn, null, (source, res) => {
+                                source?.deactivate_connection_finish(res);
+                            });
                         } else {
-                            client.activate_connection_async(connection, null, null, null, null);
+                            client.activate_connection_async(connection, null, null, null, (source, res) => {
+                                source?.add_and_activate_connection_finish(res);
+                            });
                         }
                     }}
                 />
