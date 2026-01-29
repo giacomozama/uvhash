@@ -240,34 +240,48 @@ function HourlyWeatherItem({
                 tooltipText={weatherTypeLabel(data.weatherType)}
             />
             <box hexpand={true} />
-            <box class="weather-data" valign={Gtk.Align.CENTER} halign={Gtk.Align.END} spacing={18}>
-                <box halign={Gtk.Align.START} valign={Gtk.Align.CENTER} tooltipText="Temperature">
+            <box class="weather-data" valign={Gtk.Align.CENTER}>
+                <box widthRequest={96} halign={Gtk.Align.START} valign={Gtk.Align.CENTER} tooltipText="Temperature">
                     <image iconName={"temperature"} marginEnd={8} valign={Gtk.Align.CENTER} />
                     <label
                         class="temperature-label"
                         label={`${data.temperature.toFixed(0)} °C`}
                         valign={Gtk.Align.CENTER}
-                        widthRequest={60}
+                        xalign={0.5}
+                        hexpand={true}
                     />
                 </box>
-                <box halign={Gtk.Align.START} valign={Gtk.Align.CENTER} tooltipText="Humidity">
+                <box widthRequest={96} halign={Gtk.Align.START} valign={Gtk.Align.CENTER} tooltipText="Humidity">
                     <image iconName={"rain-symbolic"} marginEnd={8} valign={Gtk.Align.CENTER} />
                     <label
-                        class="temperature-label"
+                        class="humidity-label"
                         label={`${data.humidity}%`}
                         valign={Gtk.Align.CENTER}
-                        widthRequest={60}
+                        xalign={0.5}
+                        hexpand={true}
                     />
                 </box>
-                <box class="rain" halign={Gtk.Align.START} valign={Gtk.Align.CENTER} tooltipText="Rain probability">
+                <box
+                    class="rain"
+                    widthRequest={96}
+                    halign={Gtk.Align.START}
+                    valign={Gtk.Align.CENTER}
+                    tooltipText="Rain probability"
+                >
                     <image iconName={"umbrella"} marginEnd={8} valign={Gtk.Align.CENTER} />
-                    <label label={`${data.rainProbability}%`} valign={Gtk.Align.CENTER} widthRequest={60} />
+                    <label
+                        label={`${data.rainProbability}%`}
+                        valign={Gtk.Align.CENTER}
+                        xalign={0.5}
+                        hexpand={true}
+                    />
                 </box>
                 <box
                     class="wind"
+                    widthRequest={96}
                     halign={Gtk.Align.START}
                     valign={Gtk.Align.CENTER}
-                    spacing={6}
+                    spacing={8}
                     tooltipText="Wind speed"
                 >
                     <WindIndicator direction={data?.windDirection ?? 0} size={22} />
@@ -275,7 +289,8 @@ function HourlyWeatherItem({
                         class={"wind-speed"}
                         label={`${data?.windSpeed ?? "-"} km/h`}
                         valign={Gtk.Align.CENTER}
-                        widthRequest={60}
+                        xalign={0.5}
+                        hexpand={true}
                     />
                 </box>
             </box>
@@ -319,7 +334,7 @@ export function WeatherVisualizer() {
                 HOURLY_ITEM_HEIGHT * data.length,
                 HOURLY_ITEM_HEIGHT,
                 0,
-                0
+                0,
             );
         }
     });
