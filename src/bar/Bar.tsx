@@ -96,7 +96,7 @@ export function BarShadow() {
             exclusivity={Astal.Exclusivity.IGNORE}
             anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT}
             application={app}
-            heightRequest={40}
+            heightRequest={52}
             namespace={`${config.shellName}-overlay`}
         />
     );

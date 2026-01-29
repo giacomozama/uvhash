@@ -41,7 +41,7 @@ export function DockShadow(monitor: Monitor) {
             anchor={Astal.WindowAnchor.BOTTOM}
             application={app}
             namespace={`${config.shellName}-overlay`}
-            height_request={config.dock.itemSize + config.appearance.panelPadding * 2 + config.appearance.panelMargin}
+            height_request={config.dock.itemSize + config.appearance.panelPadding * 2 + config.appearance.panelMargin * 2}
         />
     );
 }
@@ -73,7 +73,7 @@ export function DockForeground(monitor: Monitor) {
                     );
                     app.get_window(`dock-shadow-${monitor.connector}`)?.set_property(
                         "default-width",
-                        surface.width
+                        surface.width + config.appearance.panelMargin * 2
                     );
                 })!;
                 onCleanup(() => self.disconnect(sourceId));

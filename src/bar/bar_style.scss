@@ -16,7 +16,7 @@ window.BarShadow {
     box-shadow: 0 0 6px 0px rgba(0, 0, 0, 0.3);
     border-radius: common.$panel-border-radius;
     margin: common.$panel-margin;
-    margin-bottom: 0;
+    margin-bottom: 6px;
 }
 
 window.BarForeground {
