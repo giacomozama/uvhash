@@ -65,6 +65,48 @@ function weatherTypeIconName(weatherType: WeatherType) {
     }
 }
 
+function weatherTypePixelIconName(weatherType: WeatherType) {
+    switch (weatherType) {
+        case WeatherType.ClearDay:
+            return "clear_day";
+        case WeatherType.ClearNight:
+            return "clear_night";
+        case WeatherType.FewCloudsDay:
+            return "few_clouds_day";
+        case WeatherType.FewCloudsNight:
+            return "few_clouds_night";
+        case WeatherType.Overcast:
+        case WeatherType.CloudsDay:
+        case WeatherType.CloudsNight:
+            return "clouds";
+        case WeatherType.RainDay:
+            return "rain_day";
+        case WeatherType.RainNight:
+            return "rain_night";
+        case WeatherType.Rain:
+        case WeatherType.RainScattered:
+        case WeatherType.RainScatteredDay:
+        case WeatherType.RainScatteredNight:
+            return "shower_rain";
+        case WeatherType.Storm:
+        case WeatherType.StormDay:
+        case WeatherType.StormNight:
+        case WeatherType.Tornado:
+            return "thunderstorm";
+        case WeatherType.Snow:
+        case WeatherType.SnowRain:
+        case WeatherType.FreezingRain:
+        case WeatherType.Hail:
+            return "snow";
+        case WeatherType.Mist:
+            return "mist";
+        case WeatherType.Fog:
+            return "fog";
+        default:
+            return "few_clouds_day";
+    }
+}
+
 function weatherTypeLabel(weatherType: WeatherType) {
     switch (weatherType) {
         case WeatherType.ClearDay:
@@ -192,7 +234,7 @@ function HourlyWeatherItem({
             <box hexpand={true} />
             <image
                 cssClasses={["weather-type-icon"]}
-                iconName={weatherTypeIconName(data.weatherType)}
+                iconName={weatherTypePixelIconName(data.weatherType)}
                 pixelSize={48}
                 halign={Gtk.Align.CENTER}
                 tooltipText={weatherTypeLabel(data.weatherType)}

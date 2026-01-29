@@ -2,3 +2,17 @@ node_modules/
 @girs/
 .env
 .venv
+
+# exclude weather icons cause they are copyrighted
+resources/icons/hicolor/48x48/actions/clear_day.png
+resources/icons/hicolor/48x48/actions/clear_night.png
+resources/icons/hicolor/48x48/actions/clouds.png
+resources/icons/hicolor/48x48/actions/few_clouds_day.png
+resources/icons/hicolor/48x48/actions/few_clouds_night.png
+resources/icons/hicolor/48x48/actions/fog.png
+resources/icons/hicolor/48x48/actions/mist.png
+resources/icons/hicolor/48x48/actions/rain_day.png
+resources/icons/hicolor/48x48/actions/rain_night.png
+resources/icons/hicolor/48x48/actions/shower_rain.png
+resources/icons/hicolor/48x48/actions/snow.png
+resources/icons/hicolor/48x48/actions/thunderstorm.png
