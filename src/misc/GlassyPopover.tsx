@@ -3,27 +3,25 @@ import Graphene from "gi://Graphene?version=1.0";
 import GObject from "gnim/gobject";
 import config from "../config";
 import { intrinsicElements } from "ags/gtk4/jsx-runtime";
-import { Accessor, CCProps, createComputed, createEffect, createState, With } from "gnim";
+import { Accessor, CCProps } from "gnim";
 import Gsk from "gi://Gsk?version=4.0";
 import Gtk4LayerShell from "gi://Gtk4LayerShell?version=1.0";
 import app from "ags/gtk4/app";
-import { Monitor } from "../utils/monitors";
 import { bezierEasing } from "../utils/cubic_bezier";
 import Gio from "gi://Gio?version=2.0";
 import GLib from "gi://GLib?version=2.0";
-import { walkChildren } from "../utils/gtk";
 
 let currentPopoverMenu: GlassyWidgets.ContrapshellPopoverMenu | undefined;
 
 const easeOutQuint = bezierEasing({ x: 0.23, y: 1 }, { x: 0.32, y: 1 });
 
-export function PopoverOutsideClickInterceptor(monitor: Monitor) {
+export function PopoverOutsideClickInterceptor(monitor: Gdk.Monitor) {
     return (
         <window
             name={`outside-click-interceptor-${monitor.connector}`}
             css={"opacity: 0.0000001;"}
             layer={Astal.Layer.OVERLAY}
-            gdkmonitor={monitor.gdkMonitor}
+            gdkmonitor={monitor}
             keymode={Astal.Keymode.ON_DEMAND}
             exclusivity={Astal.Exclusivity.IGNORE}
             anchor={

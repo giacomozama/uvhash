@@ -1,5 +1,5 @@
 import { Astal, Gtk } from "ags/gtk4";
-import { firstNonFullscreenMonitor } from "../utils/monitors";
+import { firstNonFullscreenMonitor } from "../compositor/compositor";
 import { createRoot } from "gnim";
 import app from "ags/gtk4/app";
 import { audioState } from "./audio_state";

@@ -41,7 +41,7 @@ function NetworkConnectionItem({ connection }: { connection: NM.Connection }) {
     });
 
     const isConnected = connectionState.as((s) => s === NM.ActiveConnectionState.ACTIVATED);
-    const isConnecting = connectionState.as((s) => s === NM.ActiveConnectionState.ACTIVATING);
+    const isSwitchEnabled = connectionState.as((s) => s !== NM.ActiveConnectionState.ACTIVATING && s !== NM.ActiveConnectionState.DEACTIVATING);
 
     return (
         <box class="popover-control-list-item" orientation={Gtk.Orientation.HORIZONTAL} valign={Gtk.Align.CENTER}>
@@ -58,7 +58,7 @@ function NetworkConnectionItem({ connection }: { connection: NM.Connection }) {
             />
             <switch
                 active={isConnected}
-                sensitive={isConnecting.as((c) => !c)}
+                sensitive={isSwitchEnabled}
                 valign={Gtk.Align.CENTER}
                 halign={Gtk.Align.END}
                 cursor={CURSOR_POINTER}
@@ -76,7 +76,7 @@ function NetworkConnectionItem({ connection }: { connection: NM.Connection }) {
                             });
                         } else {
                             client.activate_connection_async(connection, null, null, null, (source, res) => {
-                                source?.add_and_activate_connection_finish(res);
+                                source?.activate_connection_finish(res);
                             });
                         }
                     }}

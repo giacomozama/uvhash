@@ -1,10 +1,10 @@
 import { CURSOR_POINTER, popupParentMenuButton } from "../utils/gtk";
 import { Gtk } from "ags/gtk4";
-import AstalHyprland from "gi://AstalHyprland?version=0.1";
 import { Squircle } from "../misc/Squircle";
 import { ContrapshellPopoverMenu } from "../misc/GlassyPopover";
 import { isTrashFull, trashActionGroup, trashMenu } from "./trash_state";
 import config from "../config";
+import { closeFocusedApp } from "../compositor/compositor";
 
 export default function Trash() {
     let isHovered = false;
@@ -21,7 +21,7 @@ export default function Trash() {
                 button={2}
                 onEnd={(source) => {
                     if (!isHovered) return;
-                    AstalHyprland.get_default().get_focused_client().kill();
+                    closeFocusedApp();
                     source.set_state(Gtk.EventSequenceState.CLAIMED);
                 }}
             />

@@ -59,9 +59,9 @@ function browseWallpaper() {
 
     filtersList.append(
         new Gtk.FileFilter({
-            name: "PNG files",
-            patterns: ["*.png"],
-            mime_types: ["image/png"],
+            name: "PNG or JPEG files",
+            patterns: ["*.png", "*.jpeg", "*.jpg"],
+            mime_types: ["image/png", "image/jpeg"],
         })
     );
 

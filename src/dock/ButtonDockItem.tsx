@@ -1,13 +1,12 @@
 import { Gtk } from "ags/gtk4";
 import { Accessor } from "gnim";
-import { Monitor } from "../utils/monitors";
 import { DockItem, DockItemFeature } from "./types";
 import MusicLibraryDockItem from "../mpd/MusicLibraryDockItem";
 import { DefaultButtonDockItem } from "../dock/DefaultButtonDockItem";
 import { dockState } from "./dock_state";
 import { GameLauncherDockItem } from "../game_launcher/GameLauncherPopover";
 
-function ButtonDockItemContent({ item, monitor }: { item: DockItem; monitor: Monitor }) {
+function ButtonDockItemContent({ item }: { item: DockItem }) {
     switch (item.feature) {
         case DockItemFeature.GameLauncher:
             return (
@@ -16,11 +15,11 @@ function ButtonDockItemContent({ item, monitor }: { item: DockItem; monitor: Mon
         case DockItemFeature.MpdClient:
             return <MusicLibraryDockItem iconName={item.iconName} />;
         default:
-            return <DefaultButtonDockItem item={item} monitor={monitor} />;
+            return <DefaultButtonDockItem item={item} />;
     }
 }
 
-export function ButtonDockItem({ item, monitor }: { item: DockItem; monitor: Monitor }) {
+export function ButtonDockItem({ item }: { item: DockItem }) {
     const entryWithoutSuffix = item.app?.get_name().slice(0, -8);
     const notificationCount = entryWithoutSuffix
         ? dockState().appNotificationCounts.as((an) => an.get(entryWithoutSuffix) ?? 0)
@@ -28,7 +27,7 @@ export function ButtonDockItem({ item, monitor }: { item: DockItem; monitor: Mon
 
     return (
         <box layoutManager={new Gtk.BinLayout()} valign={Gtk.Align.CENTER}>
-            <ButtonDockItemContent item={item} monitor={monitor} />
+            <ButtonDockItemContent item={item} />
             {notificationCount && (
                 <label
                     cssClasses={["notif-count"]}

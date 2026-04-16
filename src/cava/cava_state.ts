@@ -4,5 +4,7 @@ import config from "../config";
 export const cava = AstalCava.get_default();
 
 if (cava) {
-    config.mediaControls.configureCava(cava);
+    cava.set_bars(config.mediaControls.visualizerBars);
+    cava.set_framerate(config.mediaControls.visualizerFramerate);
+    cava.set_input(config.mediaControls.visualizerInput);
 }

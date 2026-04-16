@@ -2,7 +2,7 @@ import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import { CURSOR_POINTER } from "../utils/gtk";
 import { execAsync } from "ags/process";
-import { firstNonFullscreenMonitor } from "../utils/monitors";
+import { firstNonFullscreenMonitor } from "../compositor/compositor";
 import { createRoot } from "gnim";
 import config from "../config";
 
@@ -86,13 +86,13 @@ export default function ShutdownWindow() {
                                         label="Lock"
                                         onClicked={() => {
                                             app.get_window("shutdown")?.hide();
-                                            execAsync(`/bin/bash -c "pidof hyprlock || hyprlock"`);
+                                            execAsync(config.bar.lockCommand);
                                         }}
                                     />
                                     <ShutdownButton
                                         iconName="system-log-out-symbolic"
                                         label="Logout"
-                                        onClicked={() => execAsync("hyprctl dispatch exit")}
+                                        onClicked={() => execAsync(config.bar.logoutCommnad)}
                                     />
                                 </box>
                                 <box spacing={12}>
@@ -101,18 +101,18 @@ export default function ShutdownWindow() {
                                         label="Suspend"
                                         onClicked={() => {
                                             app.get_window("shutdown")?.hide();
-                                            execAsync("systemctl suspend");
+                                            execAsync(config.bar.suspendCommand);
                                         }}
                                     />
                                     <ShutdownButton
                                         iconName="system-restart-symbolic"
                                         label="Restart"
-                                        onClicked={() => execAsync("shutdown -r now")}
+                                        onClicked={() => execAsync(config.bar.restartCommand)}
                                     />
                                     <ShutdownButton
                                         iconName="system-shutdown-symbolic"
                                         label="Shutdown"
-                                        onClicked={() => execAsync("shutdown now")}
+                                        onClicked={() => execAsync(config.bar.shutdownCommand)}
                                     />
                                 </box>
                             </box>

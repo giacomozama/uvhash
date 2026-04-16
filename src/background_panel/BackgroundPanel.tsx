@@ -1,61 +1,35 @@
 import { Astal, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
-import { createRoot, onCleanup } from "gnim";
+import { createRoot } from "gnim";
 import config from "../config";
 import { News } from "../news/News";
 import { Finance } from "../finance/Finance";
 import { DisplayClock } from "../display_clock/DisplayClock";
 import { WeatherVisualizer } from "../weather/Weather";
-import AstalHyprland from "gi://AstalHyprland?version=0.1";
+import { backgroundPanelMonitor, setupBackgroundPanelWorkspaceTracking } from "../compositor/compositor";
+import GObject from "gnim/gobject";
 
-function setupWorkspaceTracking(window: Gtk.Window) {
-    const hyprland = AstalHyprland.get_default();
-
-    const hyprMonitor = hyprland.get_monitor_by_name(config.backgroundPanel.showOnMonitor);
-    if (!hyprMonitor) return;
-
-    let activeWorkspace: AstalHyprland.Workspace | undefined;
-    let clientsConnId: number | undefined;
-
-    function onActiveWorkspaceChanged() {
-        if (clientsConnId) {
-            hyprMonitor?.disconnect(clientsConnId);
-            activeWorkspace = undefined;
-            clientsConnId = undefined;
-        }
-
-        activeWorkspace = hyprMonitor?.activeWorkspace;
-        if (!activeWorkspace) return;
-
-        function onClientsChanged() {
-            if (activeWorkspace?.get_clients().length) {
-                window?.hide();
-            } else {
-                window?.show();
-            }
-        }
-
-        clientsConnId = activeWorkspace?.connect("notify::clients", onClientsChanged);
-        onClientsChanged();
-    }
-
-    const activeWorkspaceConnId = hyprMonitor.connect("notify::active-workspace", onActiveWorkspaceChanged);
-    onCleanup(() => hyprland.disconnect(activeWorkspaceConnId));
-
-    onActiveWorkspaceChanged();
+function layoutBackgroundPanels(
+    grid: Gtk.Grid,
+    newsPanel: GObject.Object,
+    financePanel: GObject.Object,
+    clockPanel: GObject.Object,
+    weatherPanel: GObject.Object,
+) {
+    grid.attach(newsPanel as Gtk.Widget, 0, 0, 1, 2);
+    grid.attach(financePanel as Gtk.Widget, 1, 0, 1, 2);
+    grid.attach(clockPanel as Gtk.Widget, 2, 0, 1, 1);
+    grid.attach(weatherPanel as Gtk.Widget, 2, 1, 1, 1);
 }
 
 export function BackgroundPanelShadow() {
-    const monitor = app.monitors.find((m) => m.connector === config.backgroundPanel.showOnMonitor);
-    if (!monitor) return undefined;
-
     return createRoot((dispose) => (
         <window
             name="background-panel-shadow"
             class="BackgroundPanelShadow"
             // MUST be above the gdkmonitor prop
             layer={Astal.Layer.BACKGROUND}
-            gdkmonitor={monitor}
+            gdkmonitor={backgroundPanelMonitor}
             exclusivity={Astal.Exclusivity.IGNORE}
             anchor={
                 Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT | Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT
@@ -69,7 +43,7 @@ export function BackgroundPanelShadow() {
             }}
             namespace={`${config.shellName}-overlay`}
             $={(self) => {
-                setupWorkspaceTracking(self);
+                setupBackgroundPanelWorkspaceTracking(self);
             }}
         >
             <Gtk.Grid
@@ -84,33 +58,12 @@ export function BackgroundPanelShadow() {
                 columnHomogeneous={true}
                 rowHomogeneous={true}
                 $={(self) => {
-                    self.attach(
-                        (<box class="background-panel-shadow" hexpand={true} vexpand={true} />) as Gtk.Widget,
-                        0,
-                        0,
-                        1,
-                        2
-                    );
-                    self.attach(
-                        (<box class="background-panel-shadow" hexpand={true} vexpand={true} />) as Gtk.Widget,
-                        1,
-                        0,
-                        1,
-                        2
-                    );
-                    self.attach(
-                        (<box class="background-panel-shadow" hexpand={true} vexpand={true} />) as Gtk.Widget,
-                        2,
-                        0,
-                        1,
-                        1
-                    );
-                    self.attach(
-                        (<box class="background-panel-shadow" hexpand={true} vexpand={true} />) as Gtk.Widget,
-                        2,
-                        1,
-                        1,
-                        1
+                    layoutBackgroundPanels(
+                        self,
+                        <box class="background-panel-shadow" hexpand={true} vexpand={true} />,
+                        <box class="background-panel-shadow" hexpand={true} vexpand={true} />,
+                        <box class="background-panel-shadow" hexpand={true} vexpand={true} />,
+                        <box class="background-panel-shadow" hexpand={true} vexpand={true} />,
                     );
                 }}
             />
@@ -119,9 +72,6 @@ export function BackgroundPanelShadow() {
 }
 
 export function BackgroundPanel() {
-    const monitor = app.monitors.find((m) => m.connector === config.backgroundPanel.showOnMonitor);
-    if (!monitor) return undefined;
-
     return createRoot((dispose) => {
         return (
             <window
@@ -129,7 +79,7 @@ export function BackgroundPanel() {
                 class="BackgroundPanel"
                 // MUST be above the gdkmonitor prop
                 layer={Astal.Layer.BACKGROUND}
-                gdkmonitor={monitor}
+                gdkmonitor={backgroundPanelMonitor}
                 exclusivity={Astal.Exclusivity.EXCLUSIVE}
                 anchor={
                     Astal.WindowAnchor.TOP |
@@ -146,7 +96,7 @@ export function BackgroundPanel() {
                 }}
                 namespace={config.shellName}
                 $={(self) => {
-                    setupWorkspaceTracking(self);
+                    setupBackgroundPanelWorkspaceTracking(self);
                 }}
             >
                 <Gtk.Grid
@@ -161,25 +111,16 @@ export function BackgroundPanel() {
                     columnHomogeneous={true}
                     rowHomogeneous={true}
                     $={(self) => {
-                        self.attach((config.news.enabled ? <News /> : <box />) as Gtk.Widget, 0, 0, 1, 2);
-                        self.attach((config.finance.enabled ? <Finance /> : <box />) as Gtk.Widget, 1, 0, 1, 2);
-                        self.attach(
-                            (config.backgroundPanel.showClock ? <DisplayClock /> : <box />) as Gtk.Widget,
-                            2,
-                            0,
-                            1,
-                            1
-                        );
-                        self.attach(
-                            (config.weather.enabled ? <WeatherVisualizer /> : <box />) as Gtk.Widget,
-                            2,
-                            1,
-                            1,
-                            1
+                        layoutBackgroundPanels(
+                            self,
+                            config.news.enabled ? <News /> : <box />,
+                            config.finance.enabled ? <Finance /> : <box />,
+                            config.backgroundPanel.showClock ? <DisplayClock /> : <box />,
+                            config.weather.enabled ? <WeatherVisualizer /> : <box />,
                         );
                     }}
                 />
             </window>
         );
-    }) as Gtk.Window;
+    });
 }

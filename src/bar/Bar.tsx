@@ -1,7 +1,7 @@
 import app from "ags/gtk4/app";
 import { Astal, Gtk } from "ags/gtk4";
 import { Accessor } from "gnim";
-import { firstNonFullscreenMonitor } from "../utils/monitors";
+import { firstNonFullscreenMonitor } from "../compositor/compositor";
 import MediaControls from "../media/MediaControls";
 import AudioControls from "../audio/AudioControls";
 import SystemTray from "../system_tray/SystemTray";

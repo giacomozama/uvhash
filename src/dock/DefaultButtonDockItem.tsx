@@ -1,14 +1,12 @@
 import { Gtk } from "ags/gtk4";
-import { Monitor } from "../utils/monitors";
 import { DockItem } from "./types";
-import { createComputed, createEffect, createState, onCleanup } from "gnim";
-import { findAppClient, isAppRunning, launchInHomeDir, launchOrFocus } from "../utils/apps";
+import { createComputed, createEffect, createState } from "gnim";
 import Gio from "gi://Gio?version=2.0";
 import { CURSOR_POINTER } from "../utils/gtk";
 import { popupParentMenuButton } from "../utils/gtk";
 import { Squircle } from "../misc/Squircle";
-import { ContrapshellPopoverMenu } from "../misc/GlassyPopover";
 import config from "../config";
+import { findAppClient, isAppRunning, launchInHomeDir, launchOrFocus } from "../compositor/compositor";
 
 const appMenuModel = new Gio.Menu();
 appMenuModel.append("Open", `dock_item.open`);
@@ -17,12 +15,10 @@ appMenuModel.append("Close", "dock_item.close");
 
 export function DefaultButtonDockItem({
     leftClickPopover,
-    item,
-    monitor,
+    item
 }: {
     leftClickPopover?: Gtk.Popover;
     item: DockItem;
-    monitor: Monitor;
 }) {
     const isAppRunningBinding = isAppRunning(item.app!);
     const [justOpenedState, setJustOpenedState] = createState(false);
@@ -41,7 +37,7 @@ export function DefaultButtonDockItem({
     });
 
     function doOpen() {
-        if (!justOpenedState.peek() && launchOrFocus(item.app!, monitor)) {
+        if (!justOpenedState.peek() && launchOrFocus(item.app!)) {
             setJustOpenedState(true);
             setTimeout(() => setJustOpenedState(false), 2000);
         }

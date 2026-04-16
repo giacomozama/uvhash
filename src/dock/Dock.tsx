@@ -1,15 +1,14 @@
-import { Astal, Gtk } from "ags/gtk4";
+import { Astal, Gdk, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import { Accessor, createRoot, onCleanup } from "gnim";
 import Trash from "../trash/Trash";
 import { WorkspaceSwitcher } from "../workspace_switcher/WorkspaceSwitcher";
-import { Monitor } from "../utils/monitors";
 import { dockState } from "../dock/dock_state";
 import { SearchDockItem } from "./SearchDockItem";
 import { ButtonDockItem } from "./ButtonDockItem";
 import config from "../config";
 
-export function DockBackground(monitor: Monitor) {
+export function DockBackground(monitor: Gdk.Monitor) {
     return (
         <window
             visible
@@ -17,7 +16,7 @@ export function DockBackground(monitor: Monitor) {
             class="DockBackground"
             // MUST be above the gdkmonitor prop
             layer={Astal.Layer.BOTTOM}
-            gdkmonitor={monitor.gdkMonitor}
+            gdkmonitor={monitor}
             exclusivity={Astal.Exclusivity.IGNORE}
             anchor={Astal.WindowAnchor.BOTTOM}
             application={app}
@@ -28,7 +27,7 @@ export function DockBackground(monitor: Monitor) {
     );
 }
 
-export function DockShadow(monitor: Monitor) {
+export function DockShadow(monitor: Gdk.Monitor) {
     return (
         <window
             visible
@@ -36,7 +35,7 @@ export function DockShadow(monitor: Monitor) {
             class="DockShadow"
             // MUST be above the gdkmonitor prop
             layer={Astal.Layer.BOTTOM}
-            gdkmonitor={monitor.gdkMonitor}
+            gdkmonitor={monitor}
             exclusivity={Astal.Exclusivity.IGNORE}
             anchor={Astal.WindowAnchor.BOTTOM}
             application={app}
@@ -46,7 +45,7 @@ export function DockShadow(monitor: Monitor) {
     );
 }
 
-export function DockForeground(monitor: Monitor) {
+export function DockForeground(monitor: Gdk.Monitor) {
     return createRoot((dispose) => (
         <window
             visible
@@ -54,7 +53,7 @@ export function DockForeground(monitor: Monitor) {
             class="DockForeground"
             // MUST be above the gdkmonitor prop
             layer={Astal.Layer.BOTTOM}
-            gdkmonitor={monitor.gdkMonitor}
+            gdkmonitor={monitor}
             exclusivity={Astal.Exclusivity.EXCLUSIVE}
             anchor={Astal.WindowAnchor.BOTTOM}
             application={app}
@@ -85,9 +84,9 @@ export function DockForeground(monitor: Monitor) {
             >
                 <box cssName="main" hexpand={true} vexpand={true} spacing={6}>
                     {config.dock.showShortcuts &&
-                        dockState().dockItems.map((item) => <ButtonDockItem item={item} monitor={monitor} />)}
+                        dockState().dockItems.map((item) => <ButtonDockItem item={item} />)}
                     {config.trash.enabled && <Trash />}
-                    {config.workspaceSwitcher.enabled && <WorkspaceSwitcher monitor={monitor} />}
+                    {config.workspaceSwitcher.enabled && <WorkspaceSwitcher monitorId={monitor.connector} />}
                     {config.dock.showSearchButton && <SearchDockItem />}
                 </box>
                 <box class="dock-gloss" canFocus={false} canTarget={false} />

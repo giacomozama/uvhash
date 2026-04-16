@@ -20,8 +20,8 @@ export const config = {
         wallpaperPath: `${RICE_HOME}/wallpaper.png`,
         accentsFilePath: `${HOME}/.config/hypr/accents.conf`,
         defaultWallpapersDir: "/mnt/qvo/Misc/aenami/bulk/upscaled/png",
-        backgroundPanelBorderRadius: 10,
-        panelBorderRadius: 10,
+        backgroundPanelBorderRadius: 12,
+        panelBorderRadius: 12,
         panelPadding: 8,
         panelMargin: 6
     },
@@ -32,6 +32,11 @@ export const config = {
     bar: {
         enabled: true,
         showShutdownButton: true,
+        lockCommand: `/bin/bash -c "pidof hypridle && loginctl lock-session || (hypridle & loginctl lock-session)"`,
+        logoutCommnad: "hyprctl dispatch exit",
+        suspendCommand: "systemctl suspend",
+        restartCommand: "shutdown -r now",
+        shutdownCommand: "shutdown now",
         showAppearanceSettingsButton: true,
     },
     backgroundPanel: {
@@ -101,11 +106,9 @@ export const config = {
         enabled: true,
         visualizerMode: MusicVisualierMode.Pills,
         visualizerBarSpacing: 2,
-        configureCava: (cava: AstalCava.Cava) => {
-            cava.set_bars(50);
-            cava.set_framerate(60);
-            cava.set_input(AstalCava.Input.PULSE);
-        },
+        visualizerBars: 50,
+        visualizerFramerate: 60,
+        visualizerInput: AstalCava.Input.PULSE,
     },
     monitors: {
         monitorOrder: ["DP-1", "HDMI-A-1"],

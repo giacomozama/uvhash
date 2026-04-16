@@ -62,12 +62,13 @@ function drawMusicVisualizerPills(cr: giCairo.Context, width: number, height: nu
 
     const spacing = config.mediaControls.visualizerBarSpacing;
     const cavaValues = cava!.get_values();
-    const barWidth = (width - (cavaValues.length + 1) * spacing) / cavaValues.length;
+    const barCount = config.mediaControls.visualizerBars;
+    const barWidth = (width - (barCount + 1) * spacing) / barCount;
 
     cr.setLineWidth(barWidth);
     cr.setLineCap(giCairo.LineCap.ROUND);
 
-    for (let i = 0; i < cavaValues.length; i++) {
+    for (let i = 0; i < barCount; i++) {
         const val = cavaValues[i];
 
         const x = spacing + (barWidth + spacing) * i + barWidth / 2;
@@ -83,7 +84,9 @@ function drawMusicVisualizerPills(cr: giCairo.Context, width: number, height: nu
 export function MusicVisualizer() {
     return (
         <drawingarea
-            cssClasses={mediaState().playerState.status.as((s) => (s === MediaStatus.Playing ? ["bars"] : ["bars", "fading"]))}
+            cssClasses={mediaState().playerState.status.as((s) =>
+                s === MediaStatus.Playing ? ["bars"] : ["bars", "fading"],
+            )}
             overflow={Gtk.Overflow.HIDDEN}
             halign={Gtk.Align.FILL}
             vexpand={true}

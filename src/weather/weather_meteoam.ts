@@ -42,7 +42,7 @@ function parseWeatherType(raw: string) {
         case "09":
             return WeatherType.Rain;
         case "12":
-            return WeatherType.FreezingRain
+            return WeatherType.FreezingRain;
         case "15":
             return WeatherType.Hail;
         case "11":
@@ -65,9 +65,9 @@ function parseWeatherType(raw: string) {
         case "34":
             return WeatherType.FewCloudsNight;
         case "35":
-            return WeatherType.CloudsNight
+            return WeatherType.CloudsNight;
         default:
-            throw new Error("Unknown weather type");
+            return WeatherType.Unknown;
     }
 }
 
@@ -106,7 +106,7 @@ function parseWindDirection(raw: string): WindDirection {
         case "N-NW":
             return WindDirection.N_NW;
         default:
-            throw new Error("Unknown wind direction");
+            return WindDirection.N;
     }
 }
 
@@ -164,7 +164,6 @@ export async function loadMeteoAMWeatherData(): Promise<HourlyWeatherData[]> {
                 "User-Agent": `${config.shellName} ${config.shellVersion}`,
             },
         });
-
         const raw = (await r.json()) as MeteoAMResponseRaw;
 
         return await parseResponse(raw);

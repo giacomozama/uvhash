@@ -1,5 +1,5 @@
 import { createRoot, With } from "gnim";
-import { firstNonFullscreenMonitor } from "../utils/monitors";
+import { firstNonFullscreenMonitor } from "../compositor/compositor";
 import { Astal, Gtk } from "ags/gtk4";
 import app from "ags/gtk4/app";
 import { notificationsState } from "../notifications/notifications_state";

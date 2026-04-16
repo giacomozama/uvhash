@@ -1,20 +1,10 @@
 import { Gtk } from "ags/gtk4";
-import { Accessor, createEffect } from "gnim";
-import AstalHyprland from "gi://AstalHyprland?version=0.1";
-import { createBinding } from "gnim";
-import { CURSOR_POINTER } from "../utils/gtk";
-import { Monitor } from "../utils/monitors";
+import { Accessor } from "gnim";
+import { setupWorkspacesGrid } from "../compositor/compositor";
+import { WorkspaceDelegate } from "../compositor/base";
 
-const hyprland = AstalHyprland.get_default();
-
-export const workspacesBinding = createBinding(hyprland, "workspaces");
-
-export function updateWorkspacesGrid(grid: Gtk.Grid, monitor: Monitor) {
-    const workspaces = hyprland.workspaces.filter((w) => w.monitor.id === monitor.hyprlandMonitor.id);
-    workspaces.sort((a, b) => a.id - b.id);
+function updateWorkspacesGrid(grid: Gtk.Grid, workspaces: WorkspaceDelegate[]) {
     const tilesPerRow = Math.ceil(workspaces.length / 2);
-
-    const activeWorkspace = createBinding(monitor.hyprlandMonitor, "activeWorkspace");
 
     let child = grid.get_first_child();
     while (child) {
@@ -24,48 +14,32 @@ export function updateWorkspacesGrid(grid: Gtk.Grid, monitor: Monitor) {
 
     for (let i = 0; i < workspaces.length; i++) {
         const workspace = workspaces[i];
-        const workspaceClients = createBinding(workspace, "clients");
-        const button = (
-            <WorkspaceButton
-                workspace={workspace}
-                workspaceClients={workspaceClients}
-                activeWorkspace={activeWorkspace}
-            />
-        ) as Gtk.Button;
+        const button = (<WorkspaceButton delegate={workspace} />) as Gtk.Button;
         grid.attach(button, i % tilesPerRow, Math.floor(i / tilesPerRow), 1, 1);
     }
 }
 
-function WorkspaceButton({
-    workspace,
-    workspaceClients,
-    activeWorkspace,
-}: {
-    workspace: AstalHyprland.Workspace;
-    workspaceClients: Accessor<AstalHyprland.Client[]>;
-    activeWorkspace: Accessor<AstalHyprland.Workspace>;
-}) {
-    const isNotActiveWorkspace = activeWorkspace.as((w) => w.id !== workspace.id);
+function WorkspaceButton({ delegate }: { delegate: WorkspaceDelegate }) {
+    const { focusWorkspace, moveFocusedClientToWorkspace, clientCount, tooltip, isActiveWorkspace } = delegate;
 
     return (
         <button
-            label={workspaceClients.as((c) => `${c.length || ""}`)}
-            cssClasses={isNotActiveWorkspace.as((a) => (a ? [] : ["active"]))}
+            label={clientCount.as((c) => `${c || ""}`)}
+            cssClasses={isActiveWorkspace.as((a) => (a ? ["active"] : []))}
             onClicked={() => {
-                workspace.focus();
+                if (!isActiveWorkspace.peek()) {
+                    focusWorkspace();
+                }
             }}
             widthRequest={40}
-            canTarget={isNotActiveWorkspace}
-            canFocus={isNotActiveWorkspace}
-            tooltip_text={workspaceClients.as((cc) => cc.map((c) => c.initialTitle).join("\n"))}
-            cursor={CURSOR_POINTER}
+            tooltipText={tooltip}
             vexpand={true}
             halign={Gtk.Align.START}
         >
             <Gtk.GestureSingle
                 button={2}
                 onBegin={(source) => {
-                    hyprland.get_focused_client().move_to(workspace);
+                    moveFocusedClientToWorkspace();
                     source.set_state(Gtk.EventSequenceState.CLAIMED);
                 }}
             />
@@ -73,7 +47,7 @@ function WorkspaceButton({
     );
 }
 
-export function WorkspaceSwitcher({ monitor }: { monitor: Monitor }) {
+export function WorkspaceSwitcher({ monitorId }: { monitorId: string }) {
     return (
         <box>
             <box class="workspace-switcher-border-l" vexpand={true} />
@@ -85,10 +59,7 @@ export function WorkspaceSwitcher({ monitor }: { monitor: Monitor }) {
                 vexpand={true}
                 overflow={Gtk.Overflow.HIDDEN}
                 $={(self) => {
-                    createEffect(() => {
-                        workspacesBinding(); // track workspaces
-                        updateWorkspacesGrid(self, monitor);
-                    });
+                    setupWorkspacesGrid(monitorId, (d) => updateWorkspacesGrid(self, d));
                 }}
             />
             <box class="workspace-switcher-border-r" vexpand={true} />

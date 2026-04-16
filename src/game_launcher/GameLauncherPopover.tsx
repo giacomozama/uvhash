@@ -1,13 +1,13 @@
 import { Gtk } from "ags/gtk4";
 import { GameLauncherEntry } from "../game_launcher/types";
-import { launchOrFocus } from "../utils/apps";
 import { popdownParentWindow } from "../utils/gtk";
 import { CURSOR_POINTER } from "../utils/gtk";
 import { Squircle } from "../misc/Squircle";
-import { createEffect, createState, onCleanup } from "gnim";
+import { createEffect, createState } from "gnim";
 import { launchers } from "../game_launcher/game_launcher_state";
 import config from "../config";
 import app from "ags/gtk4/app";
+import { launchOrFocus } from "../compositor/compositor";
 
 const width = 500;
 const padding = 24;
