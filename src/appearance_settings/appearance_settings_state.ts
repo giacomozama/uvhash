@@ -4,6 +4,7 @@ import { generatePalette, parseRGB, rgbaToHex, rgbaWithAlpha, rgbToHex } from ".
 import { Accessor, createRoot, createState } from "gnim";
 import { createStorageBackedState } from "../utils/gnim";
 import { storage } from "../storage/storage_state";
+import { execAsync } from "ags/process";
 
 export type AppearanceSettingsState = {
     wallpaper: Accessor<string>;
@@ -45,29 +46,33 @@ function createAppearanceSettingsState(): AppearanceSettingsState {
 
             fileIOStream.outputStream.write(
                 `
-$shell_accent_1 = ${newAccent1.slice(1)}
-$shell_accent_1_10 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.1)).slice(1)}
-$shell_accent_1_20 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.2)).slice(1)}
-$shell_accent_1_30 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.3)).slice(1)}
-$shell_accent_1_40 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.4)).slice(1)}
-$shell_accent_1_50 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.5)).slice(1)}
-$shell_accent_1_60 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.6)).slice(1)}
-$shell_accent_1_70 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.7)).slice(1)}
-$shell_accent_1_80 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.8)).slice(1)}
-$shell_accent_1_90 = ${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.9)).slice(1)}
+local shell_accents = {
+    accent_1 = "${newAccent1.slice(1)}",
+    accent_1_10 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.1)).slice(1)}",
+    accent_1_20 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.2)).slice(1)}",
+    accent_1_30 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.3)).slice(1)}",
+    accent_1_40 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.4)).slice(1)}",
+    accent_1_50 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.5)).slice(1)}",
+    accent_1_60 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.6)).slice(1)}",
+    accent_1_70 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.7)).slice(1)}",
+    accent_1_80 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.8)).slice(1)}",
+    accent_1_90 = "${rgbaToHex(rgbaWithAlpha(accent1rgb, 0.9)).slice(1)}",
 
-$shell_accent_2 = ${newAccent2.slice(1)}
-$shell_accent_2_10 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.1)).slice(1)}
-$shell_accent_2_20 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.2)).slice(1)}
-$shell_accent_2_30 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.3)).slice(1)}
-$shell_accent_2_40 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.4)).slice(1)}
-$shell_accent_2_50 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.5)).slice(1)}
-$shell_accent_2_60 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.6)).slice(1)}
-$shell_accent_2_70 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.7)).slice(1)}
-$shell_accent_2_80 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.8)).slice(1)}
-$shell_accent_2_90 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.9)).slice(1)}
+    accent_2 = "${newAccent2.slice(1)}",
+    accent_2_10 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.1)).slice(1)}",
+    accent_2_20 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.2)).slice(1)}",
+    accent_2_30 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.3)).slice(1)}",
+    accent_2_40 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.4)).slice(1)}",
+    accent_2_50 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.5)).slice(1)}",
+    accent_2_60 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.6)).slice(1)}",
+    accent_2_70 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.7)).slice(1)}",
+    accent_2_80 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.8)).slice(1)}",
+    accent_2_90 = "${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.9)).slice(1)}"
+}
+
+return shell_accents
 `,
-                null
+                null,
             );
             fileIOStream.close(null);
         }
@@ -84,20 +89,29 @@ $shell_accent_2_90 = ${rgbaToHex(rgbaWithAlpha(accent2rgb, 0.9)).slice(1)}
             return;
         }
 
-        const newWallpaperFile = Gio.File.new_for_path(wallpaperPath);
-        const wallpaperFile = Gio.File.new_for_path(config.appearance.wallpaperPath);
-        newWallpaperFile.copy(wallpaperFile, Gio.FileCopyFlags.OVERWRITE, null, (cur, tot) => {
-            if (cur === tot) {
+        // const newWallpaperFile = Gio.File.new_for_path(wallpaperPath);
+        // const wallpaperFile = Gio.File.new_for_path(config.appearance.wallpaperPath);
+        execAsync([config.path.magick, wallpaperPath, config.appearance.wallpaperPath])
+            .then(() => {
                 onComplete();
-            }
-        });
+            })
+            .catch((err) => console.log(err));
+        // newWallpaperFile.copy(wallpaperFile, Gio.FileCopyFlags.OVERWRITE, null, (cur, tot) => {
+        //     if (cur === tot) {
+        //         onComplete();
+        //     }
+        // });
     }
 
     function updatePalette() {
+        const wp = wallpaper();
+        console.log(wp);
         generatePalette(wallpaper(), 5, undefined, "dbscan").then((p) => {
             if (p) {
+                console.log("cuck");
                 setGeneratedPalette(p.map((c) => rgbToHex(c!)));
             } else {
+                console.log("fag");
                 setGeneratedPalette([]);
             }
         });

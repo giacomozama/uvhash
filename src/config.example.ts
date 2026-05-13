@@ -17,7 +17,7 @@ export const config = {
     shellVersion: "0.1",
     appearance: {
         wallpaperPath: `${HOME}/.config/hypr/wallpaper.png`,
-        accentsFilePath: `${HOME}/.config/hypr/accents.conf`,
+        accentsFilePath: `${HOME}/.config/hypr/accents.lua`,
         defaultWallpapersDir: `${HOME}/Pictures`,
     },
     audioControls: {

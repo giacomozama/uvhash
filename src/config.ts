@@ -12,18 +12,19 @@ const CACHE_DIR = `${HOME}/.cache/${SHELL_NAME}`;
 const RICE_HOME = GLib.getenv("RICE_HOME");
 const ACCENT_1 = parseRGB(GLib.getenv("SHELL_ACCENT_1") ?? "0781e3");
 const ACCENT_2 = parseRGB(GLib.getenv("SHELL_ACCENT_2") ?? "ff0077");
+const IS_DGPU_MODE = GLib.getenv("GPU_CONF") == "gpu_perf.conf";
 
 export const config = {
     shellName: SHELL_NAME,
     shellVersion: SHELL_VERSION,
     appearance: {
         wallpaperPath: `${RICE_HOME}/wallpaper.png`,
-        accentsFilePath: `${HOME}/.config/hypr/accents.conf`,
-        defaultWallpapersDir: "/mnt/qvo/Misc/aenami/bulk/upscaled/png",
+        accentsFilePath: `${HOME}/.config/hypr/accents.lua`,
+        defaultWallpapersDir: "/mnt/evo/Wallpapers",
         backgroundPanelBorderRadius: 12,
         panelBorderRadius: 12,
         panelPadding: 8,
-        panelMargin: 6
+        panelMargin: 6,
     },
     audioControls: {
         enabled: true,
@@ -33,7 +34,7 @@ export const config = {
         enabled: true,
         showShutdownButton: true,
         lockCommand: `/bin/bash -c "pidof hypridle && loginctl lock-session || (hypridle & loginctl lock-session)"`,
-        logoutCommnad: "hyprctl dispatch exit",
+        logoutCommand: "hyprctl dispatch \"hl.dsp.exit()\"",
         suspendCommand: "systemctl suspend",
         restartCommand: "shutdown -r now",
         shutdownCommand: "shutdown now",
@@ -42,7 +43,7 @@ export const config = {
     backgroundPanel: {
         enabled: true,
         showClock: true,
-        showOnMonitor: "HDMI-A-1",
+        showOnMonitor: IS_DGPU_MODE ? "DP-2" : "DVI-D-1",
     },
     bluetooth: {
         enabled: true,
@@ -62,19 +63,21 @@ export const config = {
         enabled: true,
         showShortcuts: true,
         showSearchButton: true,
-        items: [
-            { query: "firefox.desktop" },
-            { query: "org.gnome.Geary.desktop" },
-            { iconName: "multimedia-audio-player", feature: DockItemFeature.MpdClient, tooltip: "Music" },
-            { iconName: "applications-games", feature: DockItemFeature.GameLauncher, tooltip: "Games" },
-            { query: "kitty.desktop" },
-            { query: "org.gnome.Nautilus.desktop" },
-            { query: "idea.desktop" },
-            { query: "code.desktop" },
-            { query: "android-studio.desktop" },
-            { query: "org.qbittorrent.qBittorrent.desktop" },
-            { query: "discord.desktop" },
-        ] as DockItemQuery[],
+        items: (
+            [
+                { query: "firefox.desktop" },
+                { query: "org.gnome.Geary.desktop" },
+                { iconName: "multimedia-audio-player", feature: DockItemFeature.MpdClient, tooltip: "Music" },
+                { iconName: "applications-games", feature: DockItemFeature.GameLauncher, tooltip: "Games" },
+                { query: "kitty.desktop" },
+                { query: "org.gnome.Nautilus.desktop" },
+                { query: "idea.desktop" },
+                { query: "code.desktop" },
+                { query: "android-studio.desktop" },
+                { query: "org.qbittorrent.qBittorrent.desktop" },
+                { query: "discord.desktop" },
+            ] as DockItemQuery[]
+        ).concat(IS_DGPU_MODE ? [] : [{ query: "virt-manager.desktop" }]),
         itemSize: 52,
         iconSize: 36,
         searchIconSize: 28,
@@ -82,9 +85,7 @@ export const config = {
     },
     finance: {
         enabled: true,
-        favorite_stocks: [
-            "GOOGL"
-        ]
+        favorite_stocks: ["GOOGL"],
     },
     gameLaunchers: {
         enabled: true,
@@ -111,7 +112,7 @@ export const config = {
         visualizerInput: AstalCava.Input.PULSE,
     },
     monitors: {
-        monitorOrder: ["DP-1", "HDMI-A-1"],
+        monitorOrder: IS_DGPU_MODE ? ["DP-1", "DP-2"] : ["HDMI-A-2", "DVI-D-1"],
     },
     mpd: {
         enabled: true,

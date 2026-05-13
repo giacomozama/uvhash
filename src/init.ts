@@ -45,10 +45,10 @@ function getAppCSS() {
         --background-panel-border-radius: ${config.appearance.backgroundPanelBorderRadius}px;
         --panel-padding: ${config.appearance.panelPadding}px;
         --panel-margin: ${config.appearance.panelMargin}px;
-        --glassy-bg-color: ${storage.peek().useDarkPanels ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.05)"};
+        --glassy-bg-color: ${storage.peek().useDarkPanels ? "rgba(10, 10, 10, 0.4)" : "rgba(255, 255, 255, 0.05)"};
         --glassy-box-shadow: ${
             storage.peek().useDarkPanels
-                ? "inset 0 0 3px 1px rgba(255, 255, 255, 0.16), inset 0 0 0 1px rgba(255, 255, 255, 0.1)"
+                ? "inset 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 0 3px 1px rgba(255, 255, 255, 0.15)"
                 : "inset 0 0 1px 3px rgba(255, 255, 255, 0.04), inset 0 0 0 1px rgba(255, 255, 255, 0.11)"
         };
     }

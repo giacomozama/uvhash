@@ -92,7 +92,7 @@ export default function ShutdownWindow() {
                                     <ShutdownButton
                                         iconName="system-log-out-symbolic"
                                         label="Logout"
-                                        onClicked={() => execAsync(config.bar.logoutCommnad)}
+                                        onClicked={() => execAsync(config.bar.logoutCommand)}
                                     />
                                 </box>
                                 <box spacing={12}>

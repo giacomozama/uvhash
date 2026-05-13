@@ -26,6 +26,7 @@ window.BarForeground {
 
         .bar-button > button,
         .bar-chip > button,
+        .bar-chip > image,
         .bar-button > menubutton > button,
         button.bar-button {
             -gtk-icon-size: 16px;

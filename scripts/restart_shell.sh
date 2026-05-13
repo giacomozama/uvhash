@@ -4,7 +4,7 @@ export SHELL_ACCENT_1=$1
 export SHELL_ACCENT_2=$2
 
 killall hyprpaper
-hyprctl dispatch exec hyprpaper
+hyprctl dispatch "hl.dsp.exec_cmd('hyprpaper')"
 
 killall gjs
-hyprctl dispatch exec "ags run --gtk 4 $RICE_HOME/shell/app.ts"
+hyprctl dispatch "hl.dsp.exec_cmd('ags run --gtk 4 $RICE_HOME/shell/app.ts')"

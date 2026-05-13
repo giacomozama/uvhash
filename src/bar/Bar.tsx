@@ -18,6 +18,7 @@ import { ShutdownBarButton } from "../shutdown/ShutdownBarButton";
 import { AppearanceSettingsBarButton } from "../appearance_settings/AppearanceSettingsBarButton";
 import config from "../config";
 import { storage } from "../storage/storage_state";
+import ModeIndicator from "../mode_indicator/ModeIndicator";
 
 function BarContent() {
     return (
@@ -54,6 +55,7 @@ function BarContent() {
                     {config.network.enabled && <NetworkBarButton />}
                     {config.caffeine.enabled && <CaffeineBarButton />}
                     {config.gsConnect.enabled && <GSConnectIndicator />}
+                    <ModeIndicator />
                 </box>
                 {config.audioControls.enabled && <BarDivider />}
                 {config.audioControls.enabled && <AudioControls />}
